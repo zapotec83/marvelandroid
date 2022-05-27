@@ -1,0 +1,88 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk setup.compileSdk
+
+    defaultConfig {
+        minSdk setup.minSdk
+        targetSdk setup.targetSdk
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    namespace 'com.jorider.data'
+}
+
+dependencies {
+    implementation project(path: ':domain')
+
+    implementation "androidx.room:room-runtime:${versions.room_version}"
+    implementation "androidx.room:room-ktx:${versions.room_version}"
+
+    annotationProcessor "androidx.room:room-compiler:${versions.room_version}"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:${versions.room_version}"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+    // Stetho
+    implementation "com.facebook.stetho:stetho-okhttp3:${versions.stetho}"
+
+    // OKHttp
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:${versions.okhttp}"))
+
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
+//Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.couroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.couroutines}"
+
+    // Extensions
+    implementation "androidx.core:core-ktx:${versions.androidx_core_ktx}"
+
+    implementation "com.google.dagger:hilt-android:${versions.dagger_hilt}"
+    implementation "androidx.hilt:hilt-common:${versions.androidx_hilt}"
+
+    kapt "com.google.dagger:hilt-android-compiler:${versions.dagger_hilt}"
+    kapt "androidx.hilt:hilt-compiler:${versions.androidx_hilt}"
+
+    testImplementation "junit:junit:${versions.junit}"
+    // Optional -- Robolectric environment
+    testImplementation "androidx.test:core:${versions.androidXTestVersion}"
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:${versions.mockitoVersion}"
+    // Optional -- mockito-kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlinVersion}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlinx_coroutines_android}"
+}

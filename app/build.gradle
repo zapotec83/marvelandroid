@@ -1,0 +1,100 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk setup.compileSdk
+
+    defaultConfig {
+        applicationId "com.jorider.example"
+        minSdk setup.minSdk
+        targetSdk setup.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    // Always show the result of every unit test when running via command line, even if it passes.
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    namespace 'com.jorider.example'
+}
+
+dependencies {
+
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
+
+    implementation "com.google.dagger:hilt-android:${versions.dagger_hilt}"
+    implementation "androidx.hilt:hilt-common:${versions.androidx_hilt}"
+
+    kapt "com.google.dagger:hilt-android-compiler:${versions.dagger_hilt}"
+    kapt "androidx.hilt:hilt-compiler:${versions.androidx_hilt}"
+
+    implementation "androidx.appcompat:appcompat:${versions.androidx_appcompat}"
+    implementation "androidx.recyclerview:recyclerview:${versions.androidx_recyclerview}"
+    implementation "androidx.legacy:legacy-support-v4:${versions.androidx_support_v4}"
+    implementation "androidx.cardview:cardview:${versions.androidx_cardview}"
+    implementation "androidx.percentlayout:percentlayout:${versions.androidx_percentLayout}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
+
+
+    // Image downloading & caching
+    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
+    kapt "com.github.bumptech.glide:compiler:${versions.glide}"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
+    implementation "io.reactivex.rxjava2:rxkotlin:${versions.rxkotlin}"
+
+    // Extensions
+    implementation "androidx.core:core-ktx:${versions.androidx_core_ktx}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment_ktx}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle_ktx}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle_ktx}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle_ktx}"
+    implementation "androidx.room:room-ktx:${versions.room_version}"
+
+//Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinx_coroutines_android}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinx_coroutines_android}"
+
+    implementation "com.android.support.constraint:constraint-layout:${versions.constraint_layout}"
+    implementation "com.github.bumptech.glide:glide:${versions.glide_version}"
+    kapt "com.github.bumptech.glide:compiler:${versions.glide_version}"
+
+    testImplementation "junit:junit:${versions.junit}"
+    // Optional -- Robolectric environment
+    testImplementation "androidx.test:core:${versions.androidXTestVersion}"
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:${versions.mockitoVersion}"
+    // Optional -- mockito-kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlinVersion}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlinx_coroutines_android}"
+    testImplementation "androidx.arch.core:core-testing:${versions.archTestingVersion}"
+}
